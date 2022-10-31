@@ -3,7 +3,7 @@ const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
-const Timer = document.querySelector("#timer");
+const timer = document.querySelector("#timer");
 console.log("hello world");
 let currentQuestion = {};
 let answerChoices = true;
@@ -69,17 +69,19 @@ function timerFn() {
     if (timer === 0) {
       clearInterval(quizTimer);
     }
-    Timer.innerText = timer;
+    timer.innerText = timer;
     console.log(timer);
     timer--;
   }, 1000);
 }
+
 function gameOver() {
   alert("Game over! Add your intials") + timer;
   clearInterval(quizTimer);
   reset();
   document.body.textContent = "Game Over!";
 }
+
 StartQuiz = () => {
   counter = 0;
   score = 0;
@@ -92,7 +94,7 @@ nextQuestion = () => {
   // if (allQuestions.length === 0) {
   //   return window.location.assign("end.html");
   // }
-  questionCounter++;
+  counter++;
   const index = Math.floor(Math.random() * allQuestions.length);
   currentQuestion = allQuestions[index];
   question.innerText = currentQuestion.Question;
