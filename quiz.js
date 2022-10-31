@@ -5,10 +5,10 @@ const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
 console.log("hello world");
 let currentQuestion = {};
-let acceptingAnswers = true;
+let answerChoices = true;
 let score = 0;
 let questionCounter = 0;
-let availableQuestions = [];
+let allQuestions = [];
 
 let questions = [
   {
@@ -71,9 +71,9 @@ StartQuiz = () => {
 };
 
 nextQuestion = () => {
-  if (allQuestions.length === 0) {
-    return window.location.assign("end.html");
-  }
+  // if (allQuestions.length === 0) {
+  //   return window.location.assign("end.html");
+  // }
   questionCounter++;
   const questionIndex = Math.floor(Math.random() * allQuestions.length);
   currentQuestion = allQuestions[questionIndex];
@@ -86,16 +86,20 @@ nextQuestion = () => {
   });
   allQuestions.splice(questionCounter, 1);
 
-  acceptingAnswer = true;
+  answerChoices = true;
 };
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     console.log(e.target);
-    if (!acceptingAnswers) return;
+    if (!answerChoices) return;
 
-    acceptingAnswers = false;
+    answerChoices = false;
     const choiceSelected = e.target;
     const answerSelected = choiceSelected.dataset["number"];
+
+    // const toApply = answerSelected == currentQuestion.Answer ? "correct" : "incorrect"
+
+    // }
     nextQuestion();
   });
 });
