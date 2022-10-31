@@ -1,11 +1,11 @@
-const question = document.querySelector("#question");
-const choices = document.querySelectorAll(".choice-text");
+const question = document.querySelector("#questions");
+const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
-
+console.log("hello world");
 let currentQuestion = {};
-let acceptiongAnswers = true;
+let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
@@ -13,28 +13,28 @@ let availableQuestions = [];
 let questions = [
   {
     Question: "What does CSS stand for?",
-    choices1: "customer service and support",
-    choices2: "College Scholarship Service Profile",
-    choices3: "combat service support",
-    choices4: "Cascading style sheet!",
+    choice1: "customer service and support",
+    choice2: "College Scholarship Service Profile",
+    choice3: "combat service support",
+    choice4: "Cascading style sheet!",
 
     Answer: 4,
   },
   {
     Question: "What language uses appendChild?",
-    choices1: "JavaScript",
-    choices2: "HTML",
-    choices3: "jQuery",
-    choices4: "SQL",
+    choice1: "JavaScript",
+    choice2: "HTML",
+    choice3: "jQuery",
+    choice4: "SQL",
 
     Answer: 1,
   },
   {
     Question: "Css is combined by using, ____. ",
-    choices: "Link",
-    choices: "script",
-    choices: "input",
-    choices: "document",
+    choice1: "Link",
+    choice2: "script",
+    choice3: "input",
+    choice4: "document",
 
     Answer: 1,
   },
@@ -50,74 +50,91 @@ let questions = [
   },
   {
     Question: "What language makes a page dynamic and functional?",
-    choices1: "HTML",
-    choices2: "SQL",
-    choices3: "Python",
-    choices4: "Javascript",
+    choice1: "HTML",
+    choice2: "SQL",
+    choice3: "Python",
+    choice4: "Javascript",
 
     Answer: 4,
   },
 ];
 
-const SCORE_POINTS = 25;
+const CORRECT_ANSWER = 25;
 const MAX_QUESTIONS = 5;
 
 StartQuiz = () => {
   questionCounter = 0;
   score = 0;
-  availableQuestions = [...questions];
+  allQuestions = [...questions];
+  console.log(allQuestions);
   nextQuestion();
 };
 
 nextQuestion = () => {
-  if (availableQuestions === 0 || questionCounter > MAX_QUESTIONS) {
-    localStorage.setItem("currentScore", score);
-    return window.location.assign("/end.html");
+  if (allQuestions.length === 0) {
+    return window.location.assign("end.html");
   }
   questionCounter++;
-  progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
-  progressBarFull.getElementsByClassName.width = `${
-    (questionCounter / MAX_QUESTIONS) * 100
-  }% `;
-
-  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-  currentQuestion = availableQuestions[questionIndex];
-  question.innerText = currentQuestion.question;
-
-  choices.forEach((option) => {
-    const number = option.dataset["number"];
-    choices.innerText = currentQuestion["option" + number];
-  });
-
-  availableQuestions.splice(questionIndex, 1);
-
-  acceptiongAnswers = true;
+  const questionIndex = Math.floor(Math.random() * allQuestions.length);
+  currentQuestion = allQuestions[questionIndex];
+  question.innerText = currentQuestion.Question;
 
   choices.forEach((choice) => {
-    choice.addEventListener("click", (e) => {
-      if (acceptiongAnswers) return;
-      acceptiongAnswers = false;
-      const selectionChoice = e.target;
-      const chosenAnswer = selectionChoice.dataset["number"];
-      let toApply = (selectionChoice = currentQuestion.Answer
-        ? "correct"
-        : "incorrect");
-
-      if (toApply === "correct") {
-        incrementScore(SCORE_POINTS);
-      }
-      selectionChoice.parentElement.classList.add(toApply);
-
-      setTimeout(() => {
-        selectionChoice.parentElement.classList.remove(toApply);
-        nextQuestion();
-      }, 1000);
-    });
+    const number = choice.dataset["number"];
+    choice.innerText = currentQuestion["choice" + number];
+    // console.log(currentQuestion);
   });
-};
-incrementScore = (num) => {
-  score += num;
-  scoreText.innerText = score;
-};
+  allQuestions.splice(questionCounter, 1);
 
+  acceptingAnswer = true;
+};
+choices.forEach((choice) => {
+  choice.addEventListener("click", (e) => {
+    console.log(e.target);
+    if (!acceptingAnswers) return;
+
+    acceptingAnswers = false;
+    const choiceSelected = e.target;
+    const answerSelected = choiceSelected.dataset["number"];
+    nextQuestion();
+  });
+});
+//   if (availableQuestions === 0 || questionCounter > MAX_QUESTIONS) {
+//     localStorage.setItem("currentScore", score);
+//     return window.location.assign("/end.html");
+//   }
+//   // progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
+//   // progressBarFull.getElementsByClassName.width = `${
+//   (questionCounter / MAX_QUESTIONS) * 100;
+//   // }% `;
+//  * availableQuestions.length);
+//
+//
+//
+//   });
+//   availableQuestions.splice(questionIndex, 1);
+//   acceptiongAnswers = true;
+//   choices.forEach((choice) => {
+//     choice.addEventListener("click", (e) => {
+//       if (acceptiongAnswers) return;
+//       acceptiongAnswers = false;
+//       const selectionChoice = e.target;
+//       const chosenAnswer = selectionChoice.dataset["number"];
+//       let toApply = (selectionChoice = currentQuestion.Answer
+//         ? "correct"
+//         : "incorrect");
+//       if (toApply === "correct") {
+//         incrementScore(SCORE_POINTS);
+//       }
+//       selectionChoice.parentElement.classList.add(toApply);
+//       setTimeout(() => {
+//         selectionChoice.parentElement.classList.remove(toApply);
+//         nextQuestion();
+//       }, 1000);
+//     });
+//   });
+// incrementScore = (num) => {
+//   score += num;
+//   scoreText.innerText = score;
+// };
 StartQuiz();

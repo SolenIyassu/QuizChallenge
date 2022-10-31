@@ -1,21 +1,38 @@
 :root {
-  background-color: aqua(29, 26, 26);
+  background-color: #ecf5ff;
+  font-size: 100.5%;
 }
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 62.5;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #333;
 }
 
 h1 {
   font-size: 5.4 rem;
-  margin-bottom: 4rem;
+  color: darkslategrey;
+  margin-bottom: 5rem;
 }
+h1 > span {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+h2 {
+  font-size: 4.2rem;
+  margin-bottom: 4rem;
+  font-weight: 700;
+}
+h3 {
+  font-size: 2.8rem;
+  font-weight: 500;
+}
+
+/* utilities */
 .container {
   width: 100vw;
-  height: 10vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,12 +40,16 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
 }
+.container > * {
+  width: 100%;
+}
 .flex-column {
   display: flex;
   flex-direction: column;
 }
 .flex-center {
   justify-content: center;
+  align-items: center;
 }
 .justify-center {
   justify-content: center;
@@ -40,10 +61,11 @@ h1 {
   display: none;
 }
 .btn {
-  font-size: 2.4 rem;
-  padding: 2 rem 0;
-  width: 30 rem;
+  font-size: 1.4 rem;
+  padding: 1 rem 0;
+  width: 20 rem;
   text-align: center;
+  border: 0.1rem solid #56a5eb;
   margin-bottom: 1rem;
   text-decoration: none;
   color: rgb(28, 26, 26);
@@ -52,7 +74,7 @@ h1 {
 
 .btn:hover {
   cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(8, 114, 223, 0.6);
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 186, 235, 0.5);
   transform: scale(1.03);
 }
 .btn[disabled]:hover {
