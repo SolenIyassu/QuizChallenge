@@ -3,11 +3,12 @@ const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
+const Timer = document.querySelector("#timer");
 console.log("hello world");
 let currentQuestion = {};
 let answerChoices = true;
 let score = 0;
-let questionCounter = 0;
+let counter = 0;
 let allQuestions = [];
 
 let questions = [
@@ -62,8 +63,25 @@ let questions = [
 const CORRECT_ANSWER = 25;
 const MAX_QUESTIONS = 5;
 
+function timerFn() {
+  console.log("timer");
+  var quizTimer = setInterval(function () {
+    if (timer === 0) {
+      clearInterval(quizTimer);
+    }
+    Timer.innerText = timer;
+    console.log(timer);
+    timer--;
+  }, 1000);
+}
+function gameOver() {
+  alert("Game over! Add your intials") + timer;
+  clearInterval(quizTimer);
+  reset();
+  document.body.textContent = "Game Over!";
+}
 StartQuiz = () => {
-  questionCounter = 0;
+  counter = 0;
   score = 0;
   allQuestions = [...questions];
   console.log(allQuestions);
@@ -75,16 +93,16 @@ nextQuestion = () => {
   //   return window.location.assign("end.html");
   // }
   questionCounter++;
-  const questionIndex = Math.floor(Math.random() * allQuestions.length);
-  currentQuestion = allQuestions[questionIndex];
+  const index = Math.floor(Math.random() * allQuestions.length);
+  currentQuestion = allQuestions[index];
   question.innerText = currentQuestion.Question;
 
   choices.forEach((choice) => {
-    const number = choice.dataset["number"];
-    choice.innerText = currentQuestion["choice" + number];
+    const num = choice.dataset["number"];
+    choice.innerText = currentQuestion["choice" + num];
     // console.log(currentQuestion);
   });
-  allQuestions.splice(questionCounter, 1);
+  allQuestions.splice(counter, 1);
 
   answerChoices = true;
 };
