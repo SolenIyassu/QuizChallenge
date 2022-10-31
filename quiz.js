@@ -3,7 +3,8 @@ const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
-const timer = document.querySelector("#timer");
+const Timer = document.querySelector("#timer");
+let timer = 60;
 console.log("hello world");
 let currentQuestion = {};
 let answerChoices = true;
@@ -65,11 +66,11 @@ const MAX_QUESTIONS = 5;
 
 function timerFn() {
   console.log("timer");
-  var quizTimer = setInterval(function () {
+  var quizTimer = setInterval(() => {
     if (timer === 0) {
       clearInterval(quizTimer);
     }
-    timer.innerText = timer;
+    Timer.innerText = timer;
     console.log(timer);
     timer--;
   }, 1000);
@@ -88,7 +89,14 @@ StartQuiz = () => {
   allQuestions = [...questions];
   console.log(allQuestions);
   nextQuestion();
+  timerFn;
 };
+function Continue() {
+  nextQuestion.style.diplay = "block";
+  currentIndex++;
+  renderQuestion();
+  console.log(currentIndex);
+}
 
 nextQuestion = () => {
   // if (allQuestions.length === 0) {
