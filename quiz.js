@@ -3,14 +3,16 @@ const choices = Array.from(document.querySelectorAll(".choice-text"));
 const progressText = document.querySelector("#progressText");
 const scoreText = document.querySelector("#score");
 const progressBarFull = document.querySelector("#progressBarFull");
-const Timer = document.querySelector("#timer");
 let timer = 60;
+let Play = document.querySelector(".play");
 console.log("hello world");
 let currentQuestion = {};
 let answerChoices = true;
 let score = 0;
 let counter = 0;
 let allQuestions = [];
+const questionUptake = document.querySelector("#counter");
+const ScoreCount = document.querySelector("#scoreCount");
 
 let questions = [
   {
@@ -64,38 +66,38 @@ let questions = [
 const CORRECT_ANSWER = 25;
 const MAX_QUESTIONS = 5;
 
-function timerFn() {
-  console.log("timer");
-  var quizTimer = setInterval(() => {
-    if (timer === 0) {
-      clearInterval(quizTimer);
-    }
-    Timer.innerText = timer;
-    console.log(timer);
+window.setInterval(function () {
+  if (timer === 0) {
+    setTimeout(() => {
+      return window.location.assign("end.html");
+    });
+    // }
+    document.getElementById("timer").innerHTML =
+      "GameOver In : " + timer + " seconds";
     timer--;
-  }, 1000);
-}
-
-function gameOver() {
-  alert("Game over! Add your intials") + timer;
-  clearInterval(quizTimer);
-  reset();
-  document.body.textContent = "Game Over!";
-}
+    // document.getElementById("incorrect").addEventListener("click", function () {
+    //   sec -= 5;
+    //   document.getElementById("timer").innerHTML = "00:" + sec;
+    // } else {
+    //   if (answerSelected == currentQuestion.Answer) timer -= 5;
+    // }
+  }
+}, 1000);
 
 StartQuiz = () => {
   counter = 0;
   score = 0;
   allQuestions = [...questions];
-  console.log(allQuestions);
+  // console.log(allQuestions);
   nextQuestion();
-  timerFn;
 };
+// timerFn=()=>{
+
 function Continue() {
   nextQuestion.style.diplay = "block";
   currentIndex++;
   renderQuestion();
-  console.log(currentIndex);
+  // console.log(currentIndex);
 }
 
 nextQuestion = () => {
@@ -103,6 +105,7 @@ nextQuestion = () => {
   //   return window.location.assign("end.html");
   // }
   counter++;
+  questionUptake.innerText = counter + "/" + MAX_QUESTIONS;
   const index = Math.floor(Math.random() * allQuestions.length);
   currentQuestion = allQuestions[index];
   question.innerText = currentQuestion.Question;
@@ -118,17 +121,39 @@ nextQuestion = () => {
 };
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
-    console.log(e.target);
+    // console.log(e.target);
     if (!answerChoices) return;
 
     answerChoices = false;
     const choiceSelected = e.target;
     const answerSelected = choiceSelected.dataset["number"];
+    console.log(answerSelected == currentQuestion.Answer);
+    //
+    const toApply =
+      answerSelected == currentQuestion.Answer ? "correct" : "incorrect";
 
-    // const toApply = answerSelected == currentQuestion.Answer ? "correct" : "incorrect"
+    if (toApply == "correct") {
+      currentScore(CORRECT_ANSWER);
+    }
+    choiceSelected.parentElement.classList.add("toApply");
+    setTimeout(() => {
+      choiceSelected.parentElement.classList.remove("toApply");
+      nextQuestion();
+    }, 1000);
 
-    // }
-    nextQuestion();
+    currentScore = (num) => {
+      score += num;
+      scoreText.innerText = score;
+    };
+    // answerSelected.parentElement.classList.add(toApply);
+
+    // setTimeout(() => {
+    //   choiceSelected.parentElement.classList.remove(toApply);
+    //   if (answerSelected != currentQuestion.Answer) {
+    //   }
+    //   nextQuestion();
+    // }, 10000);
+    // // }
   });
 });
 //   if (availableQuestions === 0 || questionCounter > MAX_QUESTIONS) {

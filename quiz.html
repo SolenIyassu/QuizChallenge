@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="quiz.css" />
   </head>
   <body>
-    <span id="timer">timer</span>
+    <span id="timer">Timer</span>
     <div class="container">
       <div id="game" class="justify-center flex-colum">
+        <div id="hud">
+          <div id="hud-item">
+            <p class="hud-prefix">question</p>
+            <h1 class="hud-main-text" id="counter"></h1>
+          </div>
+          <div id="hud-item">
+            <p class="hud-prefix">Score</p>
+            <h1 class="hud-main-text" id="scoreCount">0</h1>
+          </div>
+        </div>
         <h2 id="questions">What is the question?</h2>
         <div class="choice-container">
           <p class="choice-prefix">A</p>
