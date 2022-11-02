@@ -101,9 +101,9 @@ function Continue() {
 }
 
 nextQuestion = () => {
-  // if (allQuestions.length === 0) {
-  //   return window.location.assign("end.html");
-  // }
+  if (allQuestions.length === 0 || questionUptake >> MAX_QUESTIONS) {
+    return window.location.assign("end.html");
+  }
   counter++;
   questionUptake.innerText = counter + "/" + MAX_QUESTIONS;
   const index = Math.floor(Math.random() * allQuestions.length);
@@ -141,10 +141,10 @@ choices.forEach((choice) => {
       nextQuestion();
     }, 1000);
 
-    currentScore = (num) => {
+    function currentScore(num) {
       score += num;
-      scoreText.innerText = score;
-    };
+      ScoreCount.innerText = score;
+    }
     // answerSelected.parentElement.classList.add(toApply);
 
     // setTimeout(() => {
